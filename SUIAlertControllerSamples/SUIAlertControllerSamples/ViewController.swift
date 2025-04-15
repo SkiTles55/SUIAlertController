@@ -45,6 +45,9 @@ class ViewController: UIViewController {
         
         addButton(title: "Alert with network png image", action: #selector(showAlertWithNetworkImageJPEG))
         addButton(title: "Action sheet with network png image", action: #selector(showActionSheetWithNetworkImageJPEG))
+        
+        addButton(title: "Alert with network gif image", action: #selector(showAlertWithNetworkImageGif))
+        addButton(title: "Action sheet with network gif image", action: #selector(showActionSheetWithNetworkImageGif))
     }
     
     private func addButton(title: String, action: Selector) {
@@ -88,6 +91,7 @@ class ViewController: UIViewController {
     // MARK: UIImageView with network image samples
     
     private let jpegImageUrl = "https://images.squarespace-cdn.com/content/v1/63139bb1e1a1a078e071f30c/040fa157-d86e-44d3-95a3-950218793a47/FI_EddYXoAAv1GL.jpeg"
+    private let gifUrl = "https://static.lottiefiles.com/blog_media/LDBJSCdvTEkkdq51ygY8vOehk8u46B81q0S7Esal.gif"
     
     @objc private func showAlertWithNetworkImageJPEG() {
         presentAlertWithNetworkImage(imageUrl: jpegImageUrl,
@@ -98,6 +102,18 @@ class ViewController: UIViewController {
     @objc private func showActionSheetWithNetworkImageJPEG() {
         presentAlertWithNetworkImage(imageUrl: jpegImageUrl,
                                      type: "JPEG",
+                                     preferredStyle: .actionSheet)
+    }
+    
+    @objc private func showAlertWithNetworkImageGif() {
+        presentAlertWithNetworkImage(imageUrl: gifUrl,
+                                     type: "GIF",
+                                     preferredStyle: .alert)
+    }
+    
+    @objc private func showActionSheetWithNetworkImageGif() {
+        presentAlertWithNetworkImage(imageUrl: gifUrl,
+                                     type: "GIF",
                                      preferredStyle: .actionSheet)
     }
     
