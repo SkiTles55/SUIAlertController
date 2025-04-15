@@ -42,6 +42,9 @@ class ViewController: UIViewController {
         
         addButton(title: "Alert with image view", action: #selector(showAlertWithImageView))
         addButton(title: "Action sheet with image view", action: #selector(showActionSheetWithImageView))
+        
+        addButton(title: "Alert with network png image", action: #selector(showAlertWithNetworkImageJPEG))
+        addButton(title: "Action sheet with network png image", action: #selector(showActionSheetWithNetworkImageJPEG))
     }
     
     private func addButton(title: String, action: Selector) {
@@ -60,12 +63,45 @@ class ViewController: UIViewController {
     }
     
     private func showSUIAlertControllerWithImageView(preferredStyle: UIAlertController.Style) {
-        let controller = SUIAlertController(title: "Test alert with image view",
-                                          message: "Sample message in alert with image view",
-                                          preferredStyle: preferredStyle)
+        let controller = getSUIAlertController(title: "Test alert with image view",
+                                               message: "Sample message in alert with image view",
+                                               preferredStyle: preferredStyle)
         let imageView = UIImageView(image: UIImage(named: "Image"))
         controller.addContentView(imageView)
-        controller.addAction(.init(title: "OK", style: .cancel))
         present(controller, animated: true)
+    }
+    
+    private let jpegImageUrl = "https://images.squarespace-cdn.com/content/v1/63139bb1e1a1a078e071f30c/040fa157-d86e-44d3-95a3-950218793a47/FI_EddYXoAAv1GL.jpeg"
+    
+    @objc private func showAlertWithNetworkImageJPEG() {
+        showSUIAlertControllerWithNetworkImage(imageUrl: jpegImageUrl,
+                                               type: "JPEG",
+                                               preferredStyle: .alert)
+    }
+    
+    @objc private func showActionSheetWithNetworkImageJPEG() {
+        showSUIAlertControllerWithNetworkImage(imageUrl: jpegImageUrl,
+                                               type: "JPEG",
+                                               preferredStyle: .actionSheet)
+    }
+    
+    private func showSUIAlertControllerWithNetworkImage(imageUrl: String?,
+                                                        type: String,
+                                                        preferredStyle: UIAlertController.Style) {
+        let controller = getSUIAlertController(title: "Test alert with network image \(type)",
+                                               message: "Sample message in alert with image view",
+                                               preferredStyle: preferredStyle)
+        controller.addContentView(imageUrl: imageUrl, placeholderImage: UIImage(systemName: "exclamationmark.triangle"))
+        present(controller, animated: true)
+    }
+    
+    private func getSUIAlertController(title: String?,
+                                       message: String?,
+                                       preferredStyle: UIAlertController.Style) -> SUIAlertController {
+        let controller = SUIAlertController(title: title,
+                                            message: message,
+                                            preferredStyle: preferredStyle)
+        controller.addAction(.init(title: "OK", style: .cancel))
+        return controller
     }
 }
