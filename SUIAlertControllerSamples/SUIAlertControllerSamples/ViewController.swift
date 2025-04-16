@@ -11,7 +11,7 @@ import SUIAlertController
 class ViewController: UIViewController {
     private var alertStyle: AlertStyle = .alert
     private var alertContentType: ContentType = .image
-    private var networkImageType: NetworkImageType = .png
+    private var networkImageType: NetworkImageType = .jpeg
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,15 +68,16 @@ class ViewController: UIViewController {
                                             message: "Message in test alert",
                                             preferredStyle: alertStyle.style)
         switch alertContentType {
+        case .customView:
+            controller.addContentView(CustomAlertContentView())
         case .image:
-            controller.addContentView(UIImageView(image: UIImage(named: "Image")))
+            controller.addContentView(UIImageView(image: UIImage.assetImage))
         case .networkImage:
-            let placeholderImage = UIImage(systemName: "exclamationmark.triangle")
             switch networkImageType {
-            case .png:
-                controller.addContentView(imageUrl: "https://images.squarespace-cdn.com/content/v1/63139bb1e1a1a078e071f30c/040fa157-d86e-44d3-95a3-950218793a47/FI_EddYXoAAv1GL.jpeg", placeholderImage: placeholderImage)
+            case .jpeg:
+                controller.addContentView(imageUrl: ImageUrls.jpeg, placeholderImage: UIImage.triangle)
             case .gif:
-                controller.addContentView(imageUrl: "https://static.lottiefiles.com/blog_media/LDBJSCdvTEkkdq51ygY8vOehk8u46B81q0S7Esal.gif", placeholderImage: placeholderImage)
+                controller.addContentView(imageUrl: ImageUrls.gif, placeholderImage: UIImage.triangle)
             }
         }
         controller.addAction(.init(title: "OK", style: .cancel))

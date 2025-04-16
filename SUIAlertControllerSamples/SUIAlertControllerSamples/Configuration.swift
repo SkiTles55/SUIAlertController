@@ -42,6 +42,7 @@ enum AlertStyle: Configuration {
 }
 
 enum ContentType: Configuration {
+    case customView
     case image
     case networkImage
     
@@ -51,6 +52,8 @@ enum ContentType: Configuration {
     
     var selectorTitle: String {
         switch self {
+        case .customView:
+            return "Custom UIView"
         case .image:
             return "Image from assets"
         case .networkImage:
@@ -60,7 +63,7 @@ enum ContentType: Configuration {
 }
 
 enum NetworkImageType: Configuration {
-    case png
+    case jpeg
     case gif
     
     var title: String {
@@ -69,8 +72,8 @@ enum NetworkImageType: Configuration {
     
     var selectorTitle: String {
         switch self {
-        case .png:
-            return "PNG"
+        case .jpeg:
+            return "JPEG"
         case .gif:
             return "GIF"
         }
