@@ -19,6 +19,7 @@ class RadioButton: UIButton {
     }
     
     private func setup() {
+        setTitleColor(.label, for: .normal)
         setImage(UIImage(systemName: "circle"), for: .normal)
         setImage(UIImage(systemName: "largecircle.fill.circle"), for: .selected)
         contentHorizontalAlignment = .left

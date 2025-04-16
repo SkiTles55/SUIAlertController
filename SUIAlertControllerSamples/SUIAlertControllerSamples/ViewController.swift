@@ -45,14 +45,15 @@ class ViewController: UIViewController {
         }
         stackView.addArrangedSubview(alertStyleConfiguration)
         
-        let contentViewConfiguration = alertContentType.getView() { [weak self] type in
-            self?.alertContentType = type
-        }
-        stackView.addArrangedSubview(contentViewConfiguration)
-        
         let networkImageTypeConfiguration = networkImageType.getView() { [weak self] type in
             self?.networkImageType = type
         }
+        networkImageTypeConfiguration.isHidden = true
+        let contentViewConfiguration = alertContentType.getView() { [weak self] type in
+            self?.alertContentType = type
+            networkImageTypeConfiguration.isHidden = type != .networkImage
+        }
+        stackView.addArrangedSubview(contentViewConfiguration)
         stackView.addArrangedSubview(networkImageTypeConfiguration)
         
         

@@ -9,6 +9,7 @@ import UIKit
 
 protocol Configuration: CaseIterable, Equatable {
     var title: String { get }
+    var selectorTitle: String { get }
     
     func getView(selectionChanged: ((Self) -> Void)?) -> UIView
 }
@@ -19,6 +20,15 @@ enum AlertStyle: Configuration {
     
     var title: String {
         "Alert style"
+    }
+    
+    var selectorTitle: String {
+        switch self {
+        case .alert:
+            return "Alert"
+        case .actionSheet:
+            return "Action sheet"
+        }
     }
     
     var style: UIAlertController.Style {
@@ -38,6 +48,15 @@ enum ContentType: Configuration {
     var title: String {
         "Content type"
     }
+    
+    var selectorTitle: String {
+        switch self {
+        case .image:
+            return "Image from assets"
+        case .networkImage:
+            return "Image from network"
+        }
+    }
 }
 
 enum NetworkImageType: Configuration {
@@ -47,6 +66,15 @@ enum NetworkImageType: Configuration {
     var title: String {
         "Network image type"
     }
+    
+    var selectorTitle: String {
+        switch self {
+        case .png:
+            return "PNG"
+        case .gif:
+            return "GIF"
+        }
+    }
 }
 
 extension Configuration {
@@ -55,12 +83,13 @@ extension Configuration {
         let selectorsStack = UIStackView.createStackBlock()
         
         let label = UILabel()
+        label.font = UIFont.preferredFont(forTextStyle: .headline)
         label.text = title
         stackView.addArrangedSubview(label)
         
         for type in Self.allCases {
             let button = RadioButton()
-            button.setTitle(String(describing: type), for: .normal)
+            button.setTitle(type.selectorTitle, for: .normal)
             button.addAction(.init(handler: { _ in
                 setType(type, button, selectionChanged)
             }), for: .touchUpInside)
