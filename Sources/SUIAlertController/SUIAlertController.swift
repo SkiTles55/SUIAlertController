@@ -46,7 +46,12 @@ open class SUIAlertController: UIAlertController {
         }
         self.contentView = contentView
         
-        messageLabel.addSubview(contentView)
+        var superView = messageLabel.superview
+        if let effectView = superView?.superview as? UIVisualEffectView {
+            superView = effectView.superview
+        }
+        superView?.addSubview(contentView)
+        
         contentView.translatesAutoresizingMaskIntoConstraints = false
         let contentSize = contentView.getSize(with: contentWidth)
         updateConstraints(contentView, contentSize)
