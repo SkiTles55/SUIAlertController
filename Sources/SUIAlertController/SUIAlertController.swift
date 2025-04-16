@@ -29,7 +29,7 @@ open class SUIAlertController: UIAlertController {
         
         let textHeight = getHeight(of: messageLabel, text: message)
         var finalTextHeight = textHeight
-        
+        disableConstraints()
         let contentSize = contentView.getSize(with: contentWidth)
         while finalTextHeight < textHeight + contentSize.height + 16 {
             self.message = (message ?? "") + "\n"
@@ -71,6 +71,11 @@ open class SUIAlertController: UIAlertController {
         }
     }
     
+    private func disableConstraints() {
+        contentViewWidthConstraint?.isActive = false
+        contentViewHeightConstraint?.isActive = false
+    }
+    
     private func getHeight(of label: UILabel, text: String?) ->  CGFloat {
         label.text = text
         let size = CGSize(width: contentWidth, height: UIView.layoutFittingCompressedSize.height)
@@ -80,11 +85,9 @@ open class SUIAlertController: UIAlertController {
     }
     
     private func updateConstraints(_ contentView: SContentView, _ contentSize: CGSize) {
-        contentViewWidthConstraint?.isActive = false
         contentViewWidthConstraint = contentView.widthAnchor.constraint(equalToConstant: contentSize.width)
         contentViewWidthConstraint?.isActive = true
         
-        contentViewHeightConstraint?.isActive = false
         contentViewHeightConstraint = contentView.heightAnchor.constraint(equalToConstant: contentSize.height)
         contentViewHeightConstraint?.isActive = true
     }
