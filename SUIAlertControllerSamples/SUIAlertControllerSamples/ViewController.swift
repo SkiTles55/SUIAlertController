@@ -10,6 +10,7 @@ import SUIAlertController
 
 class ViewController: UIViewController {
     private var alertStyle: AlertStyle = .alert
+    private var alertContentPosition: ContentPosition = .bellowMessage
     private var alertContentType: ContentType = .image
     private var networkImageType: NetworkImageType = .jpeg
     
@@ -45,6 +46,11 @@ class ViewController: UIViewController {
         }
         stackView.addArrangedSubview(alertStyleConfiguration)
         
+        let alertContentPositionConfiguration = alertContentPosition.getView() { [weak self] type in
+            self?.alertContentPosition = type
+        }
+        stackView.addArrangedSubview(alertContentPositionConfiguration)
+        
         let networkImageTypeConfiguration = networkImageType.getView() { [weak self] type in
             self?.networkImageType = type
         }
@@ -67,6 +73,7 @@ class ViewController: UIViewController {
         let controller = SUIAlertController(title: "Test alert",
                                             message: "Message in test alert",
                                             preferredStyle: alertStyle.style)
+        controller.contentPosition = alertContentPosition.position
         switch alertContentType {
         case .customView:
             controller.addContentView(CustomAlertContentView())

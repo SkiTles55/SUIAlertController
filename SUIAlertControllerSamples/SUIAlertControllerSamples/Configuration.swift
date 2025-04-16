@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SUIAlertController
 
 protocol Configuration: CaseIterable, Equatable {
     var title: String { get }
@@ -37,6 +38,33 @@ enum AlertStyle: Configuration {
             return .alert
         case .actionSheet:
             return .actionSheet
+        }
+    }
+}
+
+enum ContentPosition: Configuration {
+    case bellowMessage
+    case aboveMessage
+    
+    var title: String {
+        "Content position"
+    }
+    
+    var selectorTitle: String {
+        switch self {
+        case .bellowMessage:
+            return "Bellow message label"
+        case .aboveMessage:
+            return "Above message label"
+        }
+    }
+    
+    var position: SUIAlertController.ContentPosition {
+        switch self {
+        case .bellowMessage:
+            return .bellowMessage
+        case .aboveMessage:
+            return .aboveMessage
         }
     }
 }

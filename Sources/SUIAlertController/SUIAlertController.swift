@@ -18,6 +18,22 @@ open class SUIAlertController: UIAlertController {
         view.frame.width - 32
     }
     
+    public enum ContentPosition {
+        case bellowMessage
+        case aboveMessage
+        
+        var extendedHeight: CGFloat {
+            switch self {
+            case .bellowMessage:
+                return 16
+            case .aboveMessage:
+                return 16
+            }
+        }
+    }
+    
+    public var contentPosition: ContentPosition = .bellowMessage
+    
     open override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
@@ -31,8 +47,13 @@ open class SUIAlertController: UIAlertController {
         var finalTextHeight = textHeight
         disableConstraints()
         let contentSize = contentView.getSize(with: contentWidth)
-        while finalTextHeight < textHeight + contentSize.height + 16 {
-            self.message = (message ?? "") + "\n"
+        while finalTextHeight < textHeight + contentSize.height + contentPosition.extendedHeight {
+            switch contentPosition {
+            case .bellowMessage:
+                self.message = (message ?? "") + "\n"
+            case .aboveMessage:
+                self.message = "\n" + (message ?? "")
+            }
             finalTextHeight = getHeight(of: messageLabel, text: message)
         }
         
@@ -56,7 +77,7 @@ open class SUIAlertController: UIAlertController {
         let contentSize = contentView.getSize(with: contentWidth)
         updateConstraints(contentView, contentSize)
         NSLayoutConstraint.activate([
-            contentView.bottomAnchor.constraint(equalTo: messageLabel.bottomAnchor),
+            createPositionConstraint(contentView, messageLabel),
             contentView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             contentViewWidthConstraint,
             contentViewHeightConstraint
@@ -90,6 +111,17 @@ open class SUIAlertController: UIAlertController {
         
         contentViewHeightConstraint = contentView.heightAnchor.constraint(equalToConstant: contentSize.height)
         contentViewHeightConstraint?.isActive = true
+    }
+    
+    private func createPositionConstraint(_ contentView: SContentView,
+                                          _ messageLabel: UILabel) -> NSLayoutConstraint {
+        switch contentPosition {
+        case .bellowMessage:
+            return contentView.bottomAnchor.constraint(equalTo: messageLabel.bottomAnchor)
+        case .aboveMessage:
+            return contentView.topAnchor.constraint(equalTo: messageLabel.topAnchor,
+                                                    constant: 8)
+        }
     }
 }
 
