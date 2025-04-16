@@ -9,7 +9,9 @@ import UIKit
 import SUIAlertController
 
 class ViewController: UIViewController {
-    private var stackView: UIStackView?
+    private var alertStyle: AlertStyle = .alert
+    private var alertContentType: ContentType = .image
+    private var networkImageType: NetworkImageType = .png
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,93 +40,45 @@ class ViewController: UIViewController {
             stackView.centerYAnchor.constraint(equalTo: scrollView.centerYAnchor)
         ])
         
-        self.stackView = stackView
+        let alertStyleConfiguration = alertStyle.getView() { [weak self] type in
+            self?.alertStyle = type
+        }
+        stackView.addArrangedSubview(alertStyleConfiguration)
         
-        addButton(title: "Alert with image view", action: #selector(showAlertWithImageView))
-        addButton(title: "Action sheet with image view", action: #selector(showActionSheetWithImageView))
+        let contentViewConfiguration = alertContentType.getView() { [weak self] type in
+            self?.alertContentType = type
+        }
+        stackView.addArrangedSubview(contentViewConfiguration)
         
-        addButton(title: "Alert with network png image", action: #selector(showAlertWithNetworkImageJPEG))
-        addButton(title: "Action sheet with network png image", action: #selector(showActionSheetWithNetworkImageJPEG))
+        let networkImageTypeConfiguration = networkImageType.getView() { [weak self] type in
+            self?.networkImageType = type
+        }
+        stackView.addArrangedSubview(networkImageTypeConfiguration)
         
-        addButton(title: "Alert with network gif image", action: #selector(showAlertWithNetworkImageGif))
-        addButton(title: "Action sheet with network gif image", action: #selector(showActionSheetWithNetworkImageGif))
-    }
-    
-    private func addButton(title: String, action: Selector) {
+        
         let button = UIButton(type: .system)
-        button.setTitle(title, for: .normal)
-        button.addTarget(self, action: action, for: .touchUpInside)
-        stackView?.addArrangedSubview(button)
+        button.setTitle("Show alert", for: .normal)
+        button.addTarget(self, action: #selector(showAlert), for: .touchUpInside)
+        stackView.addArrangedSubview(button)
     }
     
-    private func presentAlert(title: String?,
-                              message: String?,
-                              preferredStyle: UIAlertController.Style,
-                              setupBlock: ((SUIAlertController) -> Void)) {
-        let controller = SUIAlertController(title: title,
-                                            message: message,
-                                            preferredStyle: preferredStyle)
-        setupBlock(controller)
+    @objc private func showAlert() {
+        let controller = SUIAlertController(title: "Test alert",
+                                            message: "Message in test alert",
+                                            preferredStyle: alertStyle.style)
+        switch alertContentType {
+        case .image:
+            controller.addContentView(UIImageView(image: UIImage(named: "Image")))
+        case .networkImage:
+            let placeholderImage = UIImage(systemName: "exclamationmark.triangle")
+            switch networkImageType {
+            case .png:
+                controller.addContentView(imageUrl: "https://images.squarespace-cdn.com/content/v1/63139bb1e1a1a078e071f30c/040fa157-d86e-44d3-95a3-950218793a47/FI_EddYXoAAv1GL.jpeg", placeholderImage: placeholderImage)
+            case .gif:
+                controller.addContentView(imageUrl: "https://static.lottiefiles.com/blog_media/LDBJSCdvTEkkdq51ygY8vOehk8u46B81q0S7Esal.gif", placeholderImage: placeholderImage)
+            }
+        }
         controller.addAction(.init(title: "OK", style: .cancel))
         present(controller, animated: true)
-    }
-    
-    // MARK: UIImageView samples
-    
-    @objc private func showAlertWithImageView() {
-        presentAlertWithImageView(preferredStyle: .alert)
-    }
-    
-    @objc private func showActionSheetWithImageView() {
-        presentAlertWithImageView(preferredStyle: .actionSheet)
-    }
-    
-    private func presentAlertWithImageView(preferredStyle: UIAlertController.Style) {
-        presentAlert(title: "Test alert with image view",
-                     message: "Sample message in alert with image view",
-                     preferredStyle: preferredStyle) { alert in
-            let imageView = UIImageView(image: UIImage(named: "Image"))
-            alert.addContentView(imageView)
-        }
-    }
-    
-    // MARK: UIImageView with network image samples
-    
-    private let jpegImageUrl = "https://images.squarespace-cdn.com/content/v1/63139bb1e1a1a078e071f30c/040fa157-d86e-44d3-95a3-950218793a47/FI_EddYXoAAv1GL.jpeg"
-    private let gifUrl = "https://static.lottiefiles.com/blog_media/LDBJSCdvTEkkdq51ygY8vOehk8u46B81q0S7Esal.gif"
-    
-    @objc private func showAlertWithNetworkImageJPEG() {
-        presentAlertWithNetworkImage(imageUrl: jpegImageUrl,
-                                     type: "JPEG",
-                                     preferredStyle: .alert)
-    }
-    
-    @objc private func showActionSheetWithNetworkImageJPEG() {
-        presentAlertWithNetworkImage(imageUrl: jpegImageUrl,
-                                     type: "JPEG",
-                                     preferredStyle: .actionSheet)
-    }
-    
-    @objc private func showAlertWithNetworkImageGif() {
-        presentAlertWithNetworkImage(imageUrl: gifUrl,
-                                     type: "GIF",
-                                     preferredStyle: .alert)
-    }
-    
-    @objc private func showActionSheetWithNetworkImageGif() {
-        presentAlertWithNetworkImage(imageUrl: gifUrl,
-                                     type: "GIF",
-                                     preferredStyle: .actionSheet)
-    }
-    
-    private func presentAlertWithNetworkImage(imageUrl: String?,
-                                              type: String,
-                                              preferredStyle: UIAlertController.Style) {
-        presentAlert(title: "Test alert with network image \(type)",
-                     message: "Sample message in alert with image view",
-                     preferredStyle: preferredStyle) { alert in
-            alert.addContentView(imageUrl: imageUrl,
-                                 placeholderImage: UIImage(systemName: "exclamationmark.triangle"))
-        }
     }
 }
