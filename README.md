@@ -1,37 +1,37 @@
 # SUIAlertController
-### Extended UIAlertController with ability show images and other custom content
+### Extended UIAlertController with the ability to display images and other custom content
 
 ![Sample project GIF](/screenshots/1.PNG?raw=true)
 
 ### Show UIImage in SUIAlertController
 ![UIImage in SUIAlertController](/screenshots/uiimage_in_alert.png?raw=true)
-```
-    func showAlert() {
-        let controller = SUIAlertController(title: "Title",
-                                            message: "Message",
-                                            preferredStyle: .alert)
-        controller.addContentView(UIImageView(image: UIImage(named: "your_image")))
-        controller.addAction(.init(title: "OK", style: .cancel))
-        present(controller, animated: true)
-    }
+```swift
+func showAlert() {
+    let controller = SUIAlertController(title: "Title",
+                                        message: "Message",
+                                        preferredStyle: .alert)
+    controller.addContentView(UIImageView(image: UIImage(named: "your_image")))
+    controller.addAction(.init(title: "OK", style: .cancel))
+    present(controller, animated: true)
+}
 ```
 
 ### Show image from url (with GIF support) in SUIAlertController
 ![image from url (with GIF support) in SUIAlertController](/screenshots/network_image_in_alert.png?raw=true)
-```
-    func showAlert() {
-        let controller = SUIAlertController(title: "Title",
-                                            message: "Message",
-                                            preferredStyle: .alert)
-        controller.addContentView(imageUrl: "your_url", placeholderImage: UIImage(named: "image_if_loading_failed"))
-        controller.addAction(.init(title: "OK", style: .cancel))
-        present(controller, animated: true)
-    }
+```swift
+func showAlert() {
+    let controller = SUIAlertController(title: "Title",
+                                        message: "Message",
+                                        preferredStyle: .alert)
+    controller.addContentView(imageUrl: "your_url", placeholderImage: UIImage(named: "image_if_loading_failed"))
+    controller.addAction(.init(title: "OK", style: .cancel))
+    present(controller, animated: true)
+}
 ```
 
 ### Show custom UIView in SUIAlertController
 ![custom UIView in SUIAlertController](/screenshots/custom_view_in_alert.png?raw=true)
-```
+```swift
 class CustomAlertContentView: UIStackView, SContentView {
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -74,13 +74,13 @@ class CustomAlertContentView: UIStackView, SContentView {
     }
 }
 ```
-```
-    func showAlert() {
-        let controller = SUIAlertController(title: "Title",
-                                            message: "Message",
-                                            preferredStyle: .alert)
-        controller.addContentView(CustomAlertContentView())
-        controller.addAction(.init(title: "OK", style: .cancel))
-        present(controller, animated: true)
-    }
+```swift
+func showAlert() {
+    let controller = SUIAlertController(title: "Title",
+                                        message: "Message",
+                                        preferredStyle: .alert)
+    controller.addContentView(CustomAlertContentView())
+    controller.addAction(.init(title: "OK", style: .cancel))
+    present(controller, animated: true)
+}
 ```
