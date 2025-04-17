@@ -38,7 +38,6 @@ open class SUIAlertController: UIAlertController {
         super.viewDidLayoutSubviews()
         
         guard let messageLabel = view.findLabel(with: message),
-              messageLabel.frame != .zero,
               let contentView else { return }
         
         resetMessageIfNeeded()
