@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 77;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -15,7 +15,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		5D5095472DAE896000E57843 /* Exceptions for "SUIAlertControllerSamples" folder in "SUIAlertControllerSamples" target */ = {
+		5D5095472DAE896000E57843 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
@@ -25,14 +25,7 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		5D5095372DAE895E00E57843 /* SUIAlertControllerSamples */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				5D5095472DAE896000E57843 /* Exceptions for "SUIAlertControllerSamples" folder in "SUIAlertControllerSamples" target */,
-			);
-			path = SUIAlertControllerSamples;
-			sourceTree = "<group>";
-		};
+		5D5095372DAE895E00E57843 /* SUIAlertControllerSamples */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (5D5095472DAE896000E57843 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = SUIAlertControllerSamples; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +106,7 @@
 				};
 			};
 			buildConfigurationList = 5D5095302DAE895E00E57843 /* Build configuration list for PBXProject "SUIAlertControllerSamples" */;
+			compatibilityVersion = "Xcode 12.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -123,7 +117,6 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 			);
-			preferredProjectObjectVersion = 77;
 			productRefGroup = 5D5095362DAE895E00E57843 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
