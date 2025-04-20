@@ -1,7 +1,21 @@
 # SUIAlertController
 ### Extended UIAlertController with the ability to display images and other custom content
 
-![Sample project GIF](/screenshots/1.PNG?raw=true)
+![Sample project GIF](/screenshots/sample.gif)
+
+---
+
+## 📦 Installation
+
+### Swift Package Manager (SPM)
+
+Xcode →  
+`File > Add Packages` →  
+Enter: `https://github.com/SkiTles55/SUIAlertController.git`
+
+---
+
+## ✅ Usage
 
 ### Show UIImage in SUIAlertController
 ![UIImage in SUIAlertController](/screenshots/uiimage_in_alert.png?raw=true)
@@ -16,6 +30,8 @@ func showAlert() {
 }
 ```
 
+---
+
 ### Show image from url (with GIF support) in SUIAlertController
 ![image from url (with GIF support) in SUIAlertController](/screenshots/network_image_in_alert.png?raw=true)
 ```swift
@@ -28,6 +44,8 @@ func showAlert() {
     present(controller, animated: true)
 }
 ```
+
+---
 
 ### Show custom UIView in SUIAlertController
 ![custom UIView in SUIAlertController](/screenshots/custom_view_in_alert.png?raw=true)
@@ -84,3 +102,14 @@ func showAlert() {
     present(controller, animated: true)
 }
 ```
+---
+
+## 📄 License
+
+MIT License
+
+Copyright (c) 2025 Dmitry Khudyakov
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction...
